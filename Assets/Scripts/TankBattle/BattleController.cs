@@ -66,7 +66,7 @@ public class BattleController : MonoBehaviour
 
     private void CheckEndGame()
     {
-        if (timer.waitForEndGame >= 0 && targetTriggers.Count > 0)
+        if (timer.waitForEndGame >= 0 && targetTriggers.Count > 0 && !bot.isDead)
         {
             float minutes = Mathf.FloorToInt(timer.waitForEndGame / 60);
             float seconds = Mathf.FloorToInt(timer.waitForEndGame % 60);
@@ -74,13 +74,21 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            if (_botScore > _playerScore)
-                battleUIManager.matchResultText.text = "Жаль, но вы проиграли";
-            else if (_playerScore > _botScore)
+            if (bot.isDead && !player.isDead)
                 battleUIManager.matchResultText.text = "Вы победили!";
-            else
+            else if (player.isDead && !bot.isDead)
+                battleUIManager.matchResultText.text = "Жаль, но вы проиграли";
+            else if (player.isDead && bot.isDead)
                 battleUIManager.matchResultText.text = "Ничья!";
-
+            else
+            {
+                if (_botScore > _playerScore)
+                    battleUIManager.matchResultText.text = "Жаль, но вы проиграли";
+                else if (_playerScore > _botScore)
+                    battleUIManager.matchResultText.text = "Вы победили!";
+                else
+                    battleUIManager.matchResultText.text = "Ничья!";
+            }
             battleUIManager.matchResultPanel.SetActive(true);
             isGameStart = false;
             StartCoroutine(BackToMenu());
