@@ -10,21 +10,26 @@ public class BattleMissileTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Bot")
         {
-            other.gameObject.GetComponentInParent<TankBattleAI>().TakeDamage(_damage);
+            var bot = other.gameObject.GetComponentInParent<TankBattleAI>();
+            if (!bot.isSleep)
+            {
+                bot.TakeDamage(_damage);
+                
+            }
         }
-        
+
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponentInParent<TankBattleController>().TakeDamage(_damage);
+            var player = other.gameObject.GetComponentInParent<TankBattleController>();
+            if (!player.isSleep)
+            {
+                player.TakeDamage(_damage);
+                
+            }
         }
 
         if (other.gameObject.tag != "Checkpoint")
             Destroy(gameObject);
 
-        // if (other.gameObject.tag == "Target")
-        // {
-        //     other.GetComponentInParent<PathAI>().nodes.Remove(other.transform);
-        //     Destroy(other.gameObject);
-        // }
     }
 }

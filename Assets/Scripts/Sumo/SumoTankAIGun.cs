@@ -7,7 +7,6 @@ public class SumoTankAIGun : MonoBehaviour
     public int maxMisslePower;
     public Transform shootPosition;
     public GameObject missileObject;
-    public GameObject targetController;
     public SumoController sumoController;
     public List<Transform> path;
 

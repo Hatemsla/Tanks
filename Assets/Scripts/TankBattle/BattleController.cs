@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BattleController : MonoBehaviour
 {
-
     public bool isGameStart;
     public TankBattleController player;
     public TankBattleAI bot;
@@ -66,7 +65,7 @@ public class BattleController : MonoBehaviour
 
     private void CheckEndGame()
     {
-        if (timer.waitForEndGame >= 0 && targetTriggers.Count > 0 && !bot.isDead)
+        if (timer.waitForEndGame >= 0)
         {
             float minutes = Mathf.FloorToInt(timer.waitForEndGame / 60);
             float seconds = Mathf.FloorToInt(timer.waitForEndGame % 60);
@@ -74,21 +73,13 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            if (bot.isDead && !player.isDead)
-                battleUIManager.matchResultText.text = "Вы победили!";
-            else if (player.isDead && !bot.isDead)
+            if (_botScore > _playerScore)
                 battleUIManager.matchResultText.text = "Жаль, но вы проиграли";
-            else if (player.isDead && bot.isDead)
-                battleUIManager.matchResultText.text = "Ничья!";
+            else if (_playerScore > _botScore)
+                battleUIManager.matchResultText.text = "Вы победили!";
             else
-            {
-                if (_botScore > _playerScore)
-                    battleUIManager.matchResultText.text = "Жаль, но вы проиграли";
-                else if (_playerScore > _botScore)
-                    battleUIManager.matchResultText.text = "Вы победили!";
-                else
-                    battleUIManager.matchResultText.text = "Ничья!";
-            }
+                battleUIManager.matchResultText.text = "Ничья!";
+            
             battleUIManager.matchResultPanel.SetActive(true);
             isGameStart = false;
             StartCoroutine(BackToMenu());
@@ -114,7 +105,7 @@ public class BattleController : MonoBehaviour
         battleUIManager.scoreText.text = $"{_playerScore} | {_botScore}";
     }
 
-    public void SetHealthBar(int value)
+    public void SetHealthBar(float value)
     {
         battleUIManager.healthBar.value = value;
     }

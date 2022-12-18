@@ -9,6 +9,7 @@ public class TargetTrigger : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        
         if (other.gameObject.tag == "Bot")
         {
             battleController.CheckScore(_score, false);

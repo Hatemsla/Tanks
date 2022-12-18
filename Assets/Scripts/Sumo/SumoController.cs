@@ -127,6 +127,7 @@ public class SumoController : MonoBehaviour
         bot = Instantiate(botPrefab, _botStartPosition, _botStartRotation).GetComponent<SumoTankAI>();
         bot.sumoController = this;
         bot.GetComponentInChildren<SumoTankAIGun>().sumoController = this;
+        bot.GetComponentInChildren<SumoTankAIGun>().path = path.nodes;
         bot.nodes = path.nodes;
 
         _roundCounter++;

@@ -23,7 +23,7 @@ public class TankBattleAIGun : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, 100, -1, QueryTriggerInteraction.Ignore))
         {
-            if (battleController.isGameStart && path.Contains(hit.transform) && !_isShoot)
+            if (battleController.isGameStart && !_isShoot && (hit.transform.tag == "Player" || path.Contains(hit.transform)))
             {
                 _isShoot = true;
                 Shoot();

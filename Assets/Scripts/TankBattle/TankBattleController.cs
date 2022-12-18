@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class TankBattleController : MonoBehaviour
 {
-    public int maxHealth;
-    public int currentHealth;
+    public float maxHealth;
+    public float currentHealth;
     public bool isGround = true;
-    public bool isDead;
+    public bool isSleep;
     public BattleController battleController;
     public Transform towerTransform;
     public Rigidbody rb;
@@ -25,9 +25,18 @@ public class TankBattleController : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    private void Update()
+    {
+        if (isSleep && currentHealth <= maxHealth)
+        {
+            battleController.SetHealthBar(currentHealth);
+            currentHealth += Time.deltaTime * 50;
+        }
+    }
+
     private void FixedUpdate()
     {
-        if (isGround && battleController.isGameStart && !isDead)
+        if (isGround && battleController.isGameStart && !isSleep)
         {
             TankMove();
         }
@@ -123,7 +132,16 @@ public class TankBattleController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            isDead = true;
+            currentHealth = 0;
+            battleController.CheckScore(2, false);
+            StartCoroutine(TankSleep());
         }
+    }
+
+    private IEnumerator TankSleep()
+    {
+        isSleep = true;
+        yield return new WaitForSeconds(2);
+        isSleep = false;
     }
 }

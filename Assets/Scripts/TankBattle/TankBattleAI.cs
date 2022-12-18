@@ -12,7 +12,7 @@ public class TankBattleAI : MonoBehaviour
     public int passedNode;
     public float wayDistance;
     public bool isGround = true;
-    public bool isDead;
+    public bool isSleep;
     public GameObject path;
     public BattleController battleController;
     public Rigidbody rb;
@@ -33,7 +33,7 @@ public class TankBattleAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isGround && battleController.isGameStart && !isDead)
+        if (isGround && battleController.isGameStart && !isSleep)
         {
             ApplySteer();
             Drive();
@@ -98,10 +98,20 @@ public class TankBattleAI : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        
+
         if (currentHealth <= 0)
         {
-            isDead = true;
+            currentHealth = 0;
+            battleController.CheckScore(2, true);
+            StartCoroutine(TankSleep());
         }
+    }
+
+    private IEnumerator TankSleep()
+    {
+        isSleep = true;
+        yield return new WaitForSeconds(3);
+        currentHealth = maxHealth;
+        isSleep = false;
     }
 }
