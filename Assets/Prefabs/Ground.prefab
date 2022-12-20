@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2330180148396372395}
   - component: {fileID: 2330180148396372394}
   - component: {fileID: 2330180148396372397}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   surfacevecs: []
   tdataFloat: []
-  terrainData: {fileID: 15600000, guid: 01ae84b3b6db6aa4fa1bb539dfbc5b29, type: 2}
+  terrainData: {fileID: 15600000, guid: 4b32caa5f9c22fd419731fc309a76109, type: 2}
   xStart: 0
   zStart: 0
   roadSurface: {fileID: 0}

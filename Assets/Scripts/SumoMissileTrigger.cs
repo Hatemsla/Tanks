@@ -20,11 +20,5 @@ public class SumoMissileTrigger : MonoBehaviour
 
         if (other.gameObject.tag != "Checkpoint")
             Destroy(gameObject);
-
-        if (other.gameObject.tag == "Target")
-        {
-            other.GetComponentInParent<PathAI>().nodes.Remove(other.transform);
-            Destroy(other.gameObject);
-        }
     }
 }

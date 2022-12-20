@@ -7,15 +7,20 @@ public class RaceTankGunAI : MonoBehaviour
     public int range;
     public Transform shootPosition;
     public LineRenderer laser;
+    public RaceController raceController;
 
     private bool _isShoot;
 
+    private void Start()
+    {
+        raceController = FindObjectOfType<RaceController>();
+    }
+
     private void Update()
     {
-        if (!_isShoot)
+        if (!_isShoot && raceController.isGameStart)
         {
             Shoot();
-            
         }
     }
 
@@ -24,21 +29,18 @@ public class RaceTankGunAI : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, range, -1, QueryTriggerInteraction.Ignore))
         {
-            if (hit.transform.tag == "Wall")
+            if (hit.transform.CompareTag("Wall"))
             {
-                _isShoot = true;
                 LaserEffect(hit);
                 Destroy(hit.transform.gameObject);
             }
-            else if (hit.transform.tag == "Player")
+            else if (hit.transform.CompareTag("Player"))
             {
-                _isShoot = true;
                 LaserEffect(hit);
                 StartCoroutine(SlowPlayer(hit));
             }
-            else if (hit.transform.tag == "Bot")
+            else if (hit.transform.CompareTag("Bot"))
             {
-                _isShoot = true;
                 LaserEffect(hit);
                 StartCoroutine(SlowBot(hit));
             }
@@ -47,16 +49,22 @@ public class RaceTankGunAI : MonoBehaviour
 
     private IEnumerator SlowPlayer(RaycastHit hit)
     {
-        hit.transform.GetComponent<RaceTankController>().rb.drag = 3;
+        var player = hit.transform.GetComponent<RaceTankController>();
+        player.rb.drag = 3;
+        player.isKnocked = true;
         yield return new WaitForSeconds(1);
-        hit.transform.GetComponent<RaceTankController>().rb.drag = 0.05f;
+        player.rb.drag = 0.05f;
+        player.isKnocked = false;
     }
 
     private IEnumerator SlowBot(RaycastHit hit)
     {
-        hit.transform.GetComponent<RaceTankAI>().rb.drag = 3;
+        var bot = hit.transform.GetComponent<RaceTankAI>();
+        bot.rb.drag = 3;
+        bot.isKnocked = true;
         yield return new WaitForSeconds(1);
-        hit.transform.GetComponent<RaceTankAI>().rb.drag = 0.05f;
+        bot.rb.drag = 0.05f;
+        bot.isKnocked = false;
     }
 
     private void LaserEffect(RaycastHit hit)
@@ -78,7 +86,8 @@ public class RaceTankGunAI : MonoBehaviour
 
     private IEnumerator IsShoot()
     {
-        yield return new WaitForSeconds(2);
+        _isShoot = true;
+        yield return new WaitForSeconds(5);
         _isShoot = false;
     }
 }

@@ -110,7 +110,7 @@ public class TankBattleAI : MonoBehaviour
     private IEnumerator TankSleep()
     {
         isSleep = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         currentHealth = maxHealth;
         isSleep = false;
     }

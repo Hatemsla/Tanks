@@ -8,14 +8,19 @@ public class RaceTankGun : MonoBehaviour
     public int range;
     public Transform shootPosition;
     public LineRenderer laser;
+    public RaceController raceController;
 
     private bool _isShoot;
 
+    private void Start()
+    {
+        raceController = FindObjectOfType<RaceController>();
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !_isShoot)
+        if (Input.GetMouseButtonDown(0) && !_isShoot && raceController.isGameStart)
         {
-            _isShoot = true;
             Shoot();
             StartCoroutine(IsShoot());
         }
@@ -52,9 +57,12 @@ public class RaceTankGun : MonoBehaviour
 
     private IEnumerator SlowBot(RaycastHit hit)
     {
-        hit.transform.GetComponent<RaceTankAI>().rb.drag = 3;
+        var bot = hit.transform.GetComponent<RaceTankAI>();
+        bot.rb.drag = 3;
+        bot.isKnocked = true;
         yield return new WaitForSeconds(1);
-        hit.transform.GetComponent<RaceTankAI>().rb.drag = 0.05f;
+        bot.rb.drag = 0.05f;
+        bot.isKnocked = false;
     }
 
     private IEnumerator ShootEffect()
@@ -66,6 +74,7 @@ public class RaceTankGun : MonoBehaviour
 
     private IEnumerator IsShoot()
     {
+        _isShoot = true;
         yield return new WaitForSeconds(2);
         _isShoot = false;
     }

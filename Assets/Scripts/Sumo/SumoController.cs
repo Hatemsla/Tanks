@@ -115,12 +115,12 @@ public class SumoController : MonoBehaviour
         isWin = false;
         isRoundOver = false;
 
-        Destroy(player.gameObject);
+        DestroyImmediate(player.gameObject);
         player = Instantiate(playerPrefab, _playerStartPosition, _playerStartRotation, path.transform).GetComponent<SumoTankController>();
         player.sumoController = this;
         player.GetComponentInChildren<SumoTankGun>().sumoController = this;
 
-        path.nodes = player.GetComponentsInChildren<Transform>().ToList();
+        path.nodes = path.GetComponentsInChildren<Transform>().ToList();
         path.nodes.RemoveAt(0);
 
         Destroy(bot.gameObject);
@@ -131,7 +131,7 @@ public class SumoController : MonoBehaviour
         bot.nodes = path.nodes;
 
         _roundCounter++;
-        sumoUIManager.roundsText.text = $"Round {_roundCounter}";
+        sumoUIManager.roundsText.text = $"Раунд {_roundCounter}";
         sumoUIManager.scoreText.text = $"{_playerRoundWins} | {_botRoundWins}";
         player.isGround = true;
         bot.isGround = true;

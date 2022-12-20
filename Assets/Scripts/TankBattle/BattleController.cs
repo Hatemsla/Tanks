@@ -11,7 +11,6 @@ public class BattleController : MonoBehaviour
     public Timer timer;
     public PathAI path;
     public BattleUIManager battleUIManager;
-    public List<TargetTrigger> targetTriggers;
 
     private int _botScore = 0;
     private int _playerScore = 0;
@@ -37,7 +36,6 @@ public class BattleController : MonoBehaviour
             item.TryGetComponent<TargetTrigger>(out target);
             if (target is TargetTrigger)
             {
-                targetTriggers.Add(target);
                 target.battleController = this;
             }
         }

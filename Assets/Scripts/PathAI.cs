@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class PathAI : MonoBehaviour
 {
     public List<Transform> nodes;
 
     private void Awake()
+    {
+        GetNodes();
+    }
+
+    public void GetNodes()
     {
         nodes = GetComponentsInChildren<Transform>().ToList();
         nodes.RemoveAt(0);

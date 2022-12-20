@@ -111,3 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleController: {fileID: 0}
+  mesh: {fileID: 0}
+  objectCollider: {fileID: 0}
+  index: 0

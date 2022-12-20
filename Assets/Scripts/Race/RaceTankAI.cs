@@ -7,21 +7,32 @@ public class RaceTankAI : MonoBehaviour
     public float maxBrakeForce;
     public float maxSteerAngle;
     public float turnSpeed;
+    public float avoidSpeed;
     public float maxSpeed;
     public float currentSpeed;
-    public int currentNode;
     public bool isBraking;
+    public bool isKnocked;
     public Rigidbody rb;
     public CheckNode checkNode;
     public PathAI pathAI;
     public RaceController raceController;
+    public Sensor frontSensor;
+    public Sensor rightFrontSensor;
+    public Sensor leftFrontSensor;
+    public Sensor rightAngleSensor;
+    public Sensor leftAngleSensor;
+    public Sensor rightSideSensor;
+    public Sensor leftSideSensor;
     public WheelCollider[] frontWheelsCollider;
     public WheelCollider[] rearWheelsCollider;
     public Transform[] frontWheelsTransform;
     public Transform[] rearWheelsTransform;
 
     private float _targetSteerAngle;
+    private float _respawnTime = 2;
+    private float _respawnCounter = 0;
     private bool _reversing;
+    private bool _avoiding;
 
     private void Start()
     {
@@ -30,21 +41,17 @@ public class RaceTankAI : MonoBehaviour
         checkNode.nodes = pathAI.nodes;
     }
 
-    private void Update()
-    {
-        currentNode = checkNode.currentNode;
-    }
-
     private void FixedUpdate()
     {
         if (raceController.isGameStart)
         {
-            // Sensors();
+            Sensors();
             ApplySteer();
             Drive();
             UpdateAllWheelPoses();
             Braking();
             LerpToSteerAngle();
+            Respawn();
         }
     }
 
@@ -96,10 +103,68 @@ public class RaceTankAI : MonoBehaviour
         }
     }
 
+    private void Sensors()
+    {
+        float avoidMultiplier = 0;
+        _avoiding = false;
+
+        if (rightFrontSensor.CheckObstacle())
+        {
+            _avoiding = true;
+            avoidMultiplier -= 1f;
+        }
+        else if (rightAngleSensor.CheckObstacle())
+        {
+            _avoiding = true;
+            avoidMultiplier -= 0.5f;
+        }
+
+        if (rightSideSensor.CheckObstacle())
+        {
+            _avoiding = true;
+            avoidMultiplier -= 0.5f;
+        }
+
+        if (leftFrontSensor.CheckObstacle())
+        {
+            _avoiding = true;
+            avoidMultiplier += 1f;
+        }
+        else if (leftAngleSensor.CheckObstacle())
+        {
+            _avoiding = true;
+            avoidMultiplier += 0.5f;
+        }
+
+        if (leftSideSensor.CheckObstacle())
+        {
+            _avoiding = true;
+            avoidMultiplier += 0.5f;
+        }
+
+        if (frontSensor.CheckObstacle())
+        {
+            _avoiding = true;
+            if (frontSensor.hit.normal.x < 0)
+            {
+                avoidMultiplier = -1;
+            }
+            else
+            {
+                avoidMultiplier = 1;
+            }
+        }
+
+        if (_avoiding)
+        {
+            _targetSteerAngle = avoidSpeed * avoidMultiplier;
+        }
+    }
+
     private void ApplySteer()
     {
-        // if (_avoiding) return;
-        Vector3 relativeVector = transform.InverseTransformPoint(checkNode.nodes[currentNode].position);
+        if (_avoiding) return;
+        Vector3 relativeVector = transform.InverseTransformPoint(checkNode.nodes[checkNode.currentNode].position);
         float newSteer = relativeVector.x / relativeVector.magnitude * maxSteerAngle;
         _targetSteerAngle = newSteer;
     }
@@ -126,6 +191,35 @@ public class RaceTankAI : MonoBehaviour
             foreach (WheelCollider wheel in rearWheelsCollider)
             {
                 wheel.brakeTorque = 0;
+            }
+        }
+    }
+
+    private void Respawn()
+    {
+        Vector3 targetNode;
+        if (rb.velocity.magnitude < 2 && !isKnocked)
+        {
+            _respawnCounter += Time.deltaTime;
+            if (_respawnCounter >= _respawnTime)
+            {
+                if (checkNode.currentNode == 0)
+                {
+                    transform.position = checkNode.nodes[checkNode.nodes.Count - 1].position;
+                    targetNode = new Vector3(checkNode.nodes[0].position.x, transform.position.y,
+                                            checkNode.nodes[0].position.z) - transform.position;
+                    transform.rotation = Quaternion.LookRotation(targetNode, Vector3.up);
+                }
+                else
+                {
+                    transform.position = checkNode.nodes[checkNode.currentNode - 1].position;
+                    targetNode = new Vector3(checkNode.nodes[checkNode.currentNode].position.x, transform.position.y,
+                                            checkNode.nodes[checkNode.currentNode].position.z) - transform.position;
+                    transform.rotation = Quaternion.LookRotation(targetNode, Vector3.up);
+                }
+                _respawnCounter = 0;
+                // _reversCounter = 0;
+                _reversing = false;
             }
         }
     }

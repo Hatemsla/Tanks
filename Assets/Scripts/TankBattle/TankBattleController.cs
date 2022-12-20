@@ -18,20 +18,12 @@ public class TankBattleController : MonoBehaviour
     public Transform[] leftWheelTrans;
 
     private float _wheelSteer = 100;
+    private float _healthRestorationTime = 2;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         currentHealth = maxHealth;
-    }
-
-    private void Update()
-    {
-        if (isSleep && currentHealth <= maxHealth)
-        {
-            battleController.SetHealthBar(currentHealth);
-            currentHealth += Time.deltaTime * 50;
-        }
     }
 
     private void FixedUpdate()
@@ -138,10 +130,27 @@ public class TankBattleController : MonoBehaviour
         }
     }
 
+    private IEnumerator RestoreHealth()
+    {
+        float timeRemaining = _healthRestorationTime;
+
+        while (timeRemaining > 0)
+        {
+            float multiplier = Mathf.Clamp01(1 - timeRemaining / _healthRestorationTime);
+            currentHealth = maxHealth * multiplier;
+
+            battleController.SetHealthBar(currentHealth);
+            timeRemaining -= Time.deltaTime;
+
+            yield return null;
+        }
+        currentHealth = maxHealth;
+    }
+
     private IEnumerator TankSleep()
     {
         isSleep = true;
-        yield return new WaitForSeconds(2);
+        yield return RestoreHealth();
         isSleep = false;
     }
 }

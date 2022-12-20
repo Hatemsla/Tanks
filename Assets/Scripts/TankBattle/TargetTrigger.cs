@@ -5,38 +5,42 @@ using UnityEngine;
 public class TargetTrigger : MonoBehaviour
 {
     public BattleController battleController;
+    public MeshRenderer mesh;
+    public BoxCollider objectCollider;
+    public int index;
     private int _score = 1;
+
+    private void Start()
+    {
+        mesh = GetComponent<MeshRenderer>();
+        objectCollider = GetComponent<BoxCollider>();
+    }
 
     private void OnCollisionEnter(Collision other)
     {
-        
-        if (other.gameObject.tag == "Bot")
+        if (other.gameObject.tag == "Bot" || other.gameObject.tag == "BotMissile")
         {
             battleController.CheckScore(_score, false);
-            battleController.targetTriggers.Remove(this);
-            battleController.path.nodes.Remove(this.transform);
-            Destroy(gameObject);
+            index = battleController.path.nodes.IndexOf(transform);
+            battleController.path.nodes.Remove(transform);
+            StartCoroutine(HideTarget());
         }
-        else if (other.gameObject.tag == "Player")
+        else if (other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerMissile")
         {
             battleController.CheckScore(_score, true);
-            battleController.targetTriggers.Remove(this);
-            battleController.path.nodes.Remove(this.transform);
-            Destroy(gameObject);
+            index = battleController.path.nodes.IndexOf(transform);
+            battleController.path.nodes.Remove(transform);
+            StartCoroutine(HideTarget());
         }
-        else if (other.gameObject.tag == "PlayerMissile")
-        {
-            battleController.CheckScore(_score, true);
-            battleController.targetTriggers.Remove(this);
-            battleController.path.nodes.Remove(this.transform);
-            Destroy(gameObject);
-        }
-        else if (other.gameObject.tag == "BotMissile")
-        {
-            battleController.CheckScore(_score, false);
-            battleController.targetTriggers.Remove(this);
-            battleController.path.nodes.Remove(this.transform);
-            Destroy(gameObject);
-        }
+    }
+
+    private IEnumerator HideTarget()
+    {
+        mesh.enabled = false;
+        objectCollider.enabled = false;
+        yield return new WaitForSeconds(10);
+        mesh.enabled = true;
+        objectCollider.enabled = true;
+        battleController.path.nodes.Insert(index, transform);
     }
 }
