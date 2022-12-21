@@ -31,12 +31,16 @@ public class RaceTankAI : MonoBehaviour
     private float _targetSteerAngle;
     private float _respawnTime = 2;
     private float _respawnCounter = 0;
+    private float _reversCounter;
+    private float _waitToReverse = 2.0f;
+    private float _reversFor = 1.5f;
     private bool _reversing;
     private bool _avoiding;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0, -1, 0);
         checkNode = GetComponent<CheckNode>();
         checkNode.nodes = pathAI.nodes;
     }
@@ -155,6 +159,28 @@ public class RaceTankAI : MonoBehaviour
             }
         }
 
+        if (rb.velocity.magnitude < 2 && !_reversing && !isKnocked)
+        {
+            _reversCounter += Time.deltaTime;
+            if (_reversCounter >= _waitToReverse)
+            {
+                _reversCounter = 0;
+                _reversing = true;
+                isBraking = false;
+            }
+        }
+
+        if (_reversing)
+        {
+            avoidMultiplier *= -1;
+            _reversCounter += Time.deltaTime;
+            if (_reversCounter >= _reversFor)
+            {
+                _reversCounter = 0;
+                _reversing = false;
+            }
+        }
+
         if (_avoiding)
         {
             _targetSteerAngle = avoidSpeed * avoidMultiplier;
@@ -218,7 +244,7 @@ public class RaceTankAI : MonoBehaviour
                     transform.rotation = Quaternion.LookRotation(targetNode, Vector3.up);
                 }
                 _respawnCounter = 0;
-                // _reversCounter = 0;
+                _reversCounter = 0;
                 _reversing = false;
             }
         }

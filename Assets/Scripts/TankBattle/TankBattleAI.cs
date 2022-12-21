@@ -6,8 +6,9 @@ public class TankBattleAI : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
-    public float maxMotorTorque = 100;
-    public float maxSteerAngle = 45f;
+    public float maxMotorTorque;
+    public float maxSteerAngle;
+    public float avoidSpeed;
     public int currentNode;
     public int passedNode;
     public float wayDistance;
@@ -16,6 +17,13 @@ public class TankBattleAI : MonoBehaviour
     public GameObject path;
     public BattleController battleController;
     public Rigidbody rb;
+    public Sensor frontSensor;
+    public Sensor rightFrontSensor;
+    public Sensor leftFrontSensor;
+    public Sensor rightAngleSensor;
+    public Sensor leftAngleSensor;
+    public Sensor rightSideSensor;
+    public Sensor leftSideSensor;
     public List<Transform> nodes;
     public WheelCollider[] FrontWheelsCol;
     public WheelCollider[] RearWheelsCol;
@@ -23,6 +31,8 @@ public class TankBattleAI : MonoBehaviour
     public Transform[] RearWheelTrans;
 
     private float _targetSteerAngle;
+    private bool _isAvoiding;
+    private bool _isTargetFind;
 
     private void Start()
     {
@@ -35,10 +45,137 @@ public class TankBattleAI : MonoBehaviour
     {
         if (isGround && battleController.isGameStart && !isSleep)
         {
+            TargetSensors();
+            if(!_isTargetFind)
+                AvoidingSensors();
             ApplySteer();
             Drive();
             CheckWaypointDistance();
             LerpToSteerAngle();
+        }
+    }
+
+    private void TargetSensors()
+    {
+        float avoidMultiplier = 0;
+        _isAvoiding = false;
+        _isTargetFind = false;
+
+        if (rightFrontSensor.CheckTarget())
+        {
+            _isAvoiding = true;
+            _isTargetFind = true;
+            avoidMultiplier += 1f;
+        }
+        else if (rightAngleSensor.CheckTarget())
+        {
+            _isAvoiding = true;
+            _isTargetFind = true;
+            avoidMultiplier += 0.5f;
+        }
+
+        if (rightSideSensor.CheckTarget())
+        {
+            _isAvoiding = true;
+            _isTargetFind = true;
+            avoidMultiplier += 0.5f;
+        }
+
+        if (leftFrontSensor.CheckTarget())
+        {
+            _isAvoiding = true;
+            _isTargetFind = true;
+            avoidMultiplier -= 1f;
+        }
+        else if (leftAngleSensor.CheckTarget())
+        {
+            _isAvoiding = true;
+            _isTargetFind = true;
+            avoidMultiplier -= 0.5f;
+        }
+
+        if (leftSideSensor.CheckTarget())
+        {
+            _isAvoiding = true;
+            _isTargetFind = true;
+            avoidMultiplier += 0.5f;
+        }
+
+        if (frontSensor.CheckTarget())
+        {
+            _isAvoiding = true;
+            _isTargetFind = true;
+            if (frontSensor.hit.normal.x < 0)
+            {
+                avoidMultiplier = 1;
+            }
+            else
+            {
+                avoidMultiplier = -1;
+            }
+        }
+
+        if (_isTargetFind)
+        {
+            _targetSteerAngle = avoidSpeed * avoidMultiplier;
+        }
+    }
+
+    private void AvoidingSensors()
+    {
+        float avoidMultiplier = 0;
+        _isAvoiding = false;
+
+        if (rightFrontSensor.CheckObstacle())
+        {
+            _isAvoiding = true;
+            avoidMultiplier -= 1f;
+        }
+        else if (rightAngleSensor.CheckObstacle())
+        {
+            _isAvoiding = true;
+            avoidMultiplier -= 0.5f;
+        }
+
+        if (rightSideSensor.CheckObstacle())
+        {
+            _isAvoiding = true;
+            avoidMultiplier -= 0.5f;
+        }
+
+        if (leftFrontSensor.CheckObstacle())
+        {
+            _isAvoiding = true;
+            avoidMultiplier += 1f;
+        }
+        else if (leftAngleSensor.CheckObstacle())
+        {
+            _isAvoiding = true;
+            avoidMultiplier += 0.5f;
+        }
+
+        if (leftSideSensor.CheckObstacle())
+        {
+            _isAvoiding = true;
+            avoidMultiplier += 0.5f;
+        }
+
+        if (frontSensor.CheckObstacle())
+        {
+            _isAvoiding = true;
+            if (frontSensor.hit.normal.x < 0)
+            {
+                avoidMultiplier = -1;
+            }
+            else
+            {
+                avoidMultiplier = 1;
+            }
+        }
+
+        if (_isAvoiding)
+        {
+            _targetSteerAngle = avoidSpeed * avoidMultiplier;
         }
     }
 
@@ -76,7 +213,7 @@ public class TankBattleAI : MonoBehaviour
         wayDistance = Vector3.Distance(transform.position, nodes[currentNode].position);
         if (Vector3.Distance(transform.position, nodes[currentNode].position) < 20f)
         {
-            if (currentNode == nodes.Count - 1)
+            if (currentNode == nodes.Count - 1 || currentNode >= nodes.Count - 1)
                 currentNode = 0;
             else
                 currentNode++;
@@ -90,6 +227,7 @@ public class TankBattleAI : MonoBehaviour
 
     private void ApplySteer()
     {
+        if (_isAvoiding || _isTargetFind) return;
         Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
         float newSteer = relativeVector.x / relativeVector.magnitude * maxSteerAngle;
         _targetSteerAngle = newSteer;

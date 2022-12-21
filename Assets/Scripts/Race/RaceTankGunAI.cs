@@ -29,7 +29,7 @@ public class RaceTankGunAI : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, range, -1, QueryTriggerInteraction.Ignore))
         {
-            if (hit.transform.CompareTag("Wall"))
+            if (hit.transform.CompareTag("Wall") && hit.distance < 20)
             {
                 LaserEffect(hit);
                 Destroy(hit.transform.gameObject);

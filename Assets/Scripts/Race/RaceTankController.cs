@@ -28,6 +28,7 @@ public class RaceTankController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(0, -1, 0);
         checkNode = GetComponent<CheckNode>();
         checkNode.nodes = pathAI.nodes;
     }

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 410466141}
+  - component: {fileID: 410466142}
   m_Layer: 0
   m_Name: LeftFrontSensor
   m_TagString: Untagged
@@ -24,13 +25,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410466140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06, y: 0, z: 0.15}
+  m_LocalPosition: {x: -0.06, y: 0.052700005, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952902845100851296}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &410466142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410466140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7baecf1e1b3394a801f70e50f84e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  sensorLength: 10
 --- !u!1 &478073743
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,6 +55,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 478073744}
+  - component: {fileID: 478073745}
   m_Layer: 0
   m_Name: RightFrontSensor
   m_TagString: Untagged
@@ -55,13 +71,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478073743}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0, z: 0.1499998}
+  m_LocalPosition: {x: 0.06, y: 0.052700005, z: 0.1499998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952902845100851296}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &478073745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478073743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7baecf1e1b3394a801f70e50f84e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  sensorLength: 10
 --- !u!1 &20653396519692729
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,8 +231,8 @@ WheelCollider:
     m_AsymptoteValue: 0.5
     m_Stiffness: 1.5
   m_SidewaysFriction:
-    m_ExtremumSlip: 1
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.6
+    m_ExtremumValue: 3
     m_AsymptoteSlip: 1
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
@@ -216,6 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1450487807689271353}
+  - component: {fileID: 929727185}
   m_Layer: 0
   m_Name: RightAngleSensor
   m_TagString: Untagged
@@ -231,13 +262,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222751217923375474}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0.06, y: 0, z: 0.1499998}
+  m_LocalPosition: {x: 0.06, y: 0.052700005, z: 0.1499998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952902845100851296}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!114 &929727185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222751217923375474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7baecf1e1b3394a801f70e50f84e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  sensorLength: 10
 --- !u!1 &480784362640537484
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8656464628960769062}
+  - component: {fileID: 1289894768}
   m_Layer: 0
   m_Name: RightSideSensor
   m_TagString: Untagged
@@ -345,13 +391,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563277192017262507}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.06, y: 0, z: 0.15}
+  m_LocalPosition: {x: 0.06, y: 0.052700005, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952902845100851296}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1289894768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563277192017262507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7baecf1e1b3394a801f70e50f84e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  sensorLength: 10
 --- !u!1 &705628515449372364
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,8 +468,8 @@ WheelCollider:
     m_AsymptoteValue: 0.5
     m_Stiffness: 1.5
   m_SidewaysFriction:
-    m_ExtremumSlip: 1
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.6
+    m_ExtremumValue: 3
     m_AsymptoteSlip: 1
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
@@ -719,8 +779,8 @@ WheelCollider:
     m_AsymptoteValue: 0.5
     m_Stiffness: 1.5
   m_SidewaysFriction:
-    m_ExtremumSlip: 1
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.6
+    m_ExtremumValue: 3
     m_AsymptoteSlip: 1
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
@@ -1049,6 +1109,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7585347358171380279}
+  - component: {fileID: 604345580}
   m_Layer: 0
   m_Name: FrontSensor
   m_TagString: Untagged
@@ -1064,13 +1125,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2237372176567404778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.15}
+  m_LocalPosition: {x: 0, y: 0.0527, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952902845100851296}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &604345580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237372176567404778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7baecf1e1b3394a801f70e50f84e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  sensorLength: 10
 --- !u!1 &2240896115482442015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1341,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6557307567867173831}
+  - component: {fileID: 1570364598}
   m_Layer: 0
   m_Name: LeftSideSensor
   m_TagString: Untagged
@@ -1281,13 +1357,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2480537281298575223}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.06, y: 0, z: 0.15}
+  m_LocalPosition: {x: -0.06, y: 0.052700005, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952902845100851296}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1570364598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2480537281298575223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7baecf1e1b3394a801f70e50f84e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  sensorLength: 10
 --- !u!1 &2847708506698964843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,8 +1602,8 @@ WheelCollider:
     m_AsymptoteValue: 0.5
     m_Stiffness: 1.5
   m_SidewaysFriction:
-    m_ExtremumSlip: 1
-    m_ExtremumValue: 1
+    m_ExtremumSlip: 0.6
+    m_ExtremumValue: 3
     m_AsymptoteSlip: 1
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
@@ -2557,7 +2647,7 @@ Transform:
   m_GameObject: {fileID: 7179082135722796578}
   m_LocalRotation: {x: 0, y: -0.026900964, z: 0, w: 0.99963814}
   m_LocalPosition: {x: 257.43, y: 0.0000019073486, z: 353.09}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3234849738587040412}
@@ -2622,9 +2712,9 @@ MonoBehaviour:
   maxMotorTorque: 200
   maxBrakeForce: 30000
   maxSteerAngle: 40
-  turnSpeed: 5
-  avoidSpeed: 0
-  maxSpeed: 200
+  turnSpeed: 10
+  avoidSpeed: 20
+  maxSpeed: 4
   currentSpeed: 0
   isBraking: 0
   isKnocked: 0
@@ -2632,13 +2722,13 @@ MonoBehaviour:
   checkNode: {fileID: 0}
   pathAI: {fileID: 0}
   raceController: {fileID: 0}
-  frontSensor: {fileID: 0}
-  rightFrontSensor: {fileID: 0}
-  leftFrontSensor: {fileID: 0}
-  rightAngleSensor: {fileID: 0}
-  leftAngleSensor: {fileID: 0}
-  rightSideSensor: {fileID: 0}
-  leftSideSensor: {fileID: 0}
+  frontSensor: {fileID: 604345580}
+  rightFrontSensor: {fileID: 478073745}
+  leftFrontSensor: {fileID: 410466142}
+  rightAngleSensor: {fileID: 929727185}
+  leftAngleSensor: {fileID: 1396200584}
+  rightSideSensor: {fileID: 1289894768}
+  leftSideSensor: {fileID: 1570364598}
   frontWheelsCollider:
   - {fileID: 2180263490730035107}
   - {fileID: 2180263490528530159}
@@ -2827,6 +2917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 419664968554740875}
+  - component: {fileID: 1396200584}
   m_Layer: 0
   m_Name: LeftAngleSensor
   m_TagString: Untagged
@@ -2842,13 +2933,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7868879780798565562}
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -0.06, y: 0, z: 0.15}
+  m_LocalPosition: {x: -0.06, y: 0.052700005, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5952902845100851296}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+--- !u!114 &1396200584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7868879780798565562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7baecf1e1b3394a801f70e50f84e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 0
+  sensorLength: 10
 --- !u!1 &8336765848189974274
 GameObject:
   m_ObjectHideFlags: 0
