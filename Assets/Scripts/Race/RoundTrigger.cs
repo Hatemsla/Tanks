@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class RoundTrigger : MonoBehaviour
 {
+    public bool isFirstLap = true;
     public GameObject wallPrefab;
     public Transform wallSpawns;
     public RaceController raceController;
-    public List<GameObject> walls;
+    public List<Wall> walls;
+    public List<WallSpawn> wallSpawnsList;
+
+    private void Start()
+    {
+        foreach (Transform wallSpawn in wallSpawns)
+        {
+            var wall = wallSpawn.gameObject.GetComponent<WallSpawn>();
+            wall.roundTrigger = this;
+            wall.wallPrefab = wallPrefab;
+            wallSpawnsList.Add(wall);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

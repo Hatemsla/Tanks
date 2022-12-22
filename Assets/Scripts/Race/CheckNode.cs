@@ -45,23 +45,19 @@ public class CheckNode : MonoBehaviour
     {
         if (roundTrigger.walls.Count > 0)
         {
-            foreach (GameObject wall in roundTrigger.walls)
+            for (int i = 0; i < roundTrigger.wallSpawnsList.Count; i++)
             {
-                Destroy(wall);
+                roundTrigger.wallSpawnsList[i].SetRandomPosition();
             }
-            roundTrigger.walls = new List<GameObject>();
         }
 
-        int i = 1;
-        foreach (Transform wall in roundTrigger.wallSpawns)
+        if (roundTrigger.isFirstLap)
         {
-            var wallObj = Instantiate(roundTrigger.wallPrefab, wall.localPosition,
-                Quaternion.identity);
-            wallObj.transform.rotation = wall.localRotation;
-            wallObj.transform.position = wall.position;
-            roundTrigger.walls.Add(wallObj);
-            i++;
+            for (int i = 0; i < roundTrigger.wallSpawnsList.Count; i++)
+            {
+                roundTrigger.wallSpawnsList[i].SpawnWall();
+            }
+            roundTrigger.isFirstLap = false;
         }
     }
-    
 }

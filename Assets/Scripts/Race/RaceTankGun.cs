@@ -38,7 +38,7 @@ public class RaceTankGun : MonoBehaviour
             laser.SetPosition(1, shootPosition.position + shootPosition.forward * hit.distance);
             if (hit.transform.tag == "Wall")
             {
-                Destroy(hit.transform.gameObject);
+                hit.transform.gameObject.SetActive(false);
             }
             else if (hit.transform.tag == "Bot")
             {

@@ -32,7 +32,7 @@ public class RaceTankGunAI : MonoBehaviour
             if (hit.transform.CompareTag("Wall") && hit.distance < 20)
             {
                 LaserEffect(hit);
-                Destroy(hit.transform.gameObject);
+                hit.transform.gameObject.SetActive(false);
             }
             else if (hit.transform.CompareTag("Player"))
             {
