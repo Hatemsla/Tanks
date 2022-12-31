@@ -91,11 +91,11 @@ public class SumoController : MonoBehaviour
         else
         {
             if (_botRoundWins > _playerRoundWins)
-                sumoUIManager.matchResultText.text = "Жаль, но вы проиграли";
+                sumoUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nСчет {_botRoundWins} | {_playerRoundWins}";
             else if (_playerRoundWins > _botRoundWins)
-                sumoUIManager.matchResultText.text = "Вы победили!";
+                sumoUIManager.matchResultText.text = $"Вы победили!\nСчет {_playerRoundWins} | {_botRoundWins}";
             else
-                sumoUIManager.matchResultText.text = "Ничья!";
+                sumoUIManager.matchResultText.text = $"Ничья!\nСчет {_playerRoundWins} | {_botRoundWins}";
 
             sumoUIManager.matchResultPanel.SetActive(true);
             isGameStart = false;

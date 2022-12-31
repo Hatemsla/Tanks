@@ -69,9 +69,9 @@ public class RaceController : MonoBehaviour
         else
         {
             if (_playerRacePosititon == 0)
-                raceUIManager.matchResultText.text = "Вы победили!";
+                raceUIManager.matchResultText.text = $"Вы победили!\nВаша позиция: {_playerRacePosititon}";
             else
-                raceUIManager.matchResultText.text = "Жаль, но вы проиграли";
+                raceUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nВаша позиция: {_playerRacePosititon}";
 
             raceUIManager.matchResultPanel.SetActive(true);
             isGameStart = false;

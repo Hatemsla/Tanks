@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2026247410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -28.75, y: 9.6, z: -26.25}
+  m_LocalPosition: {x: -28.75, y: 8.8, z: -26.25}
   m_LocalScale: {x: 4, y: 1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 525616504195594098}
   - component: {fileID: 304531116949255096}
   - component: {fileID: 4624492451005811282}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 3817996089865826390}
   - component: {fileID: 4438521467595101138}
   - component: {fileID: 8459844114423891028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   - component: {fileID: 2561922468071651731}
   - component: {fileID: 5921209367470483942}
   - component: {fileID: 7899779101785024259}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1112,10 +1112,9 @@ GameObject:
   - component: {fileID: 7158144739386209958}
   - component: {fileID: 3667304720243591755}
   - component: {fileID: 2375805427019165496}
-  - component: {fileID: 2375805427019165497}
   - component: {fileID: 2375805427019165495}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: DownTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1198,19 +1197,6 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.020000001, y: 0.02, z: 0.0006}
-  m_Center: {x: 0, y: 9.313226e-10, z: 0}
---- !u!65 &2375805427019165497
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4505874049643263467}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.020000001, y: 0.02, z: 0.0001}
   m_Center: {x: 0, y: 9.313226e-10, z: 0}
 --- !u!114 &2375805427019165495
 MonoBehaviour:
@@ -1402,7 +1388,7 @@ GameObject:
   - component: {fileID: 1069459645202078475}
   - component: {fileID: 518905019730860537}
   - component: {fileID: 5040008522215068355}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BezierCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1485,7 +1471,7 @@ GameObject:
   - component: {fileID: 6703157773141757102}
   - component: {fileID: 3324553787381879233}
   - component: {fileID: 1418962770301796104}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1736,7 +1722,7 @@ GameObject:
   - component: {fileID: 6491150763253306678}
   - component: {fileID: 4942029454242060967}
   - component: {fileID: 3278309402106853606}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1904,7 +1890,7 @@ GameObject:
   - component: {fileID: 4262725526180395164}
   - component: {fileID: 1544285712235862327}
   - component: {fileID: 2785998936298615146}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2835,7 +2821,7 @@ GameObject:
   - component: {fileID: 320710606706717352}
   - component: {fileID: 3206993861434326975}
   - component: {fileID: 6939687633970370897}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3004,7 +2990,7 @@ GameObject:
   - component: {fileID: 7247785143153102516}
   - component: {fileID: 2908540124765743192}
   - component: {fileID: 2708854344148242543}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3341,7 +3327,7 @@ GameObject:
   - component: {fileID: 2793425187098878969}
   - component: {fileID: 6452302608612828538}
   - component: {fileID: 4135878004217372145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}

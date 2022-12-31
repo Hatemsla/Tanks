@@ -2234,10 +2234,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2026247411, guid: 37ecbe0a8c3690e4bb8b899dde4ef78f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 8.8
-      objectReference: {fileID: 0}
     - target: {fileID: 2375805427019165495, guid: 37ecbe0a8c3690e4bb8b899dde4ef78f, type: 3}
       propertyPath: sumoController
       value: 
@@ -2290,12 +2286,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: arena3-2
       objectReference: {fileID: 0}
-    - target: {fileID: 4505874049643263467, guid: 37ecbe0a8c3690e4bb8b899dde4ef78f, type: 3}
-      propertyPath: m_Name
-      value: DownTrigger
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2375805427019165497, guid: 37ecbe0a8c3690e4bb8b899dde4ef78f, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37ecbe0a8c3690e4bb8b899dde4ef78f, type: 3}
 --- !u!1001 &6609906040815152013
 PrefabInstance:
@@ -2307,26 +2298,6 @@ PrefabInstance:
     - target: {fileID: 6095263598506043065, guid: ee12af08dbc430e46a4bad4e523353b3, type: 3}
       propertyPath: m_Name
       value: SumoTankAI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609906039706850915, guid: ee12af08dbc430e46a4bad4e523353b3, type: 3}
-      propertyPath: maxMisslePower
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609906039706850915, guid: ee12af08dbc430e46a4bad4e523353b3, type: 3}
-      propertyPath: targetController
-      value: 
-      objectReference: {fileID: 1876076937}
-    - target: {fileID: 6609906040192638790, guid: ee12af08dbc430e46a4bad4e523353b3, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1876076937}
-    - target: {fileID: 6609906040192638790, guid: ee12af08dbc430e46a4bad4e523353b3, type: 3}
-      propertyPath: maxSteerAngle
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6609906040192638790, guid: ee12af08dbc430e46a4bad4e523353b3, type: 3}
-      propertyPath: maxMotorTorque
-      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6609906040192638790, guid: ee12af08dbc430e46a4bad4e523353b3, type: 3}
       propertyPath: sumoController

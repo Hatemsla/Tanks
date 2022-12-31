@@ -72,12 +72,12 @@ public class BattleController : MonoBehaviour
         else
         {
             if (_botScore > _playerScore)
-                battleUIManager.matchResultText.text = "Жаль, но вы проиграли";
+                battleUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nСчет {_botScore} | {_playerScore}";
             else if (_playerScore > _botScore)
-                battleUIManager.matchResultText.text = "Вы победили!";
+                battleUIManager.matchResultText.text = $"Вы победили!\nСчет {_playerScore} | {_botScore}";
             else
-                battleUIManager.matchResultText.text = "Ничья!";
-            
+                battleUIManager.matchResultText.text = $"Ничья!\nСчет {_playerScore} | {_botScore}";
+
             battleUIManager.matchResultPanel.SetActive(true);
             isGameStart = false;
             StartCoroutine(BackToMenu());
