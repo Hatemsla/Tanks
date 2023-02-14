@@ -62,6 +62,7 @@ namespace Race
             bot.isKnocked = true;
             yield return new WaitForSeconds(1);
             bot.rb.drag = 0.05f;
+            yield return new WaitForSeconds(2);
             bot.isKnocked = false;
         }
 

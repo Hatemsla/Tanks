@@ -71,9 +71,9 @@ namespace Race
             else
             {
                 if (_playerRacePosititon == 0)
-                    raceUIManager.matchResultText.text = $"Вы победили!\nВаша позиция: {_playerRacePosititon}";
+                    raceUIManager.matchResultText.text = $"Вы победили!\nВаша позиция: {_playerRacePosititon + 1}";
                 else
-                    raceUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nВаша позиция: {_playerRacePosititon}";
+                    raceUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nВаша позиция: {_playerRacePosititon + 1}";
 
                 raceUIManager.matchResultPanel.SetActive(true);
                 isGameStart = false;

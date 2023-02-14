@@ -30,7 +30,7 @@ namespace Race
         public Transform[] rearWheelsTransform;
 
         private float _targetSteerAngle;
-        private float _respawnTime = 2;
+        private float _respawnTime = 5;
         private float _respawnCounter = 0;
         private float _reversCounter;
         private float _waitToReverse = 2.0f;

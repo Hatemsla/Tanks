@@ -19,31 +19,32 @@ namespace Race
 
         private void Update()
         {
-            if (!_isShoot && raceController.isGameStart)
-            {
-                Shoot();
-            }
+            if (raceController.isGameStart) Shoot();
         }
 
         private void Shoot()
         {
             RaycastHit hit;
-            if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, range, -1, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, range, -1,
+                QueryTriggerInteraction.Ignore))
             {
                 if (hit.transform.CompareTag("Wall") && hit.distance < 20)
                 {
                     LaserEffect(hit);
                     hit.transform.gameObject.SetActive(false);
                 }
-                else if (hit.transform.CompareTag("Player"))
+                else if (!_isShoot)
                 {
-                    LaserEffect(hit);
-                    StartCoroutine(SlowPlayer(hit));
-                }
-                else if (hit.transform.CompareTag("Bot"))
-                {
-                    LaserEffect(hit);
-                    StartCoroutine(SlowBot(hit));
+                    if (hit.transform.CompareTag("Player"))
+                    {
+                        LaserEffect(hit);
+                        StartCoroutine(SlowPlayer(hit));
+                    }
+                    else if (hit.transform.CompareTag("Bot"))
+                    {
+                        LaserEffect(hit);
+                        StartCoroutine(SlowBot(hit));
+                    }
                 }
             }
         }
@@ -65,6 +66,7 @@ namespace Race
             bot.isKnocked = true;
             yield return new WaitForSeconds(1);
             bot.rb.drag = 0.05f;
+            yield return new WaitForSeconds(2);
             bot.isKnocked = false;
         }
 
@@ -88,7 +90,8 @@ namespace Race
         private IEnumerator IsShoot()
         {
             _isShoot = true;
-            yield return new WaitForSeconds(5);
+            var timeToWait = Random.Range(15, 20);
+            yield return new WaitForSeconds(timeToWait);
             _isShoot = false;
         }
     }
