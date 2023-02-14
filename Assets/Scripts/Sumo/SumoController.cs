@@ -91,7 +91,7 @@ public class SumoController : MonoBehaviour
         else
         {
             if (_botRoundWins > _playerRoundWins)
-                sumoUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nСчет {_botRoundWins} | {_playerRoundWins}";
+                sumoUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nСчет {_playerRoundWins} | {_botRoundWins}";
             else if (_playerRoundWins > _botRoundWins)
                 sumoUIManager.matchResultText.text = $"Вы победили!\nСчет {_playerRoundWins} | {_botRoundWins}";
             else

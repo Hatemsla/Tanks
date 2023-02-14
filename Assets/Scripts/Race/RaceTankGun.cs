@@ -19,7 +19,7 @@ public class RaceTankGun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !_isShoot && raceController.isGameStart)
+        if (Input.GetKeyDown(KeyCode.Q) && !_isShoot && raceController.isGameStart)
         {
             Shoot();
             StartCoroutine(IsShoot());

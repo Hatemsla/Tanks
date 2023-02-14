@@ -13,7 +13,7 @@ public class SumoTankGun : MonoBehaviour
 
     private void Update()
     {
-        if (sumoController.isGameStart && Input.GetMouseButtonDown(0))
+        if (sumoController.isGameStart && Input.GetKeyDown(KeyCode.Q))
             Shoot();
     }
 

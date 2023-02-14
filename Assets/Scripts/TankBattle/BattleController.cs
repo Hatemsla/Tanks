@@ -72,7 +72,7 @@ public class BattleController : MonoBehaviour
         else
         {
             if (_botScore > _playerScore)
-                battleUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nСчет {_botScore} | {_playerScore}";
+                battleUIManager.matchResultText.text = $"Жаль, но вы проиграли.\nСчет {_playerScore} | {_botScore}";
             else if (_playerScore > _botScore)
                 battleUIManager.matchResultText.text = $"Вы победили!\nСчет {_playerScore} | {_botScore}";
             else

@@ -13,7 +13,7 @@ public class TankBattleGun : MonoBehaviour
 
     private void Update()
     {
-        if (battleController.isGameStart && Input.GetMouseButtonDown(0))
+        if (battleController.isGameStart && Input.GetKeyDown(KeyCode.Q))
             Shoot();
     }
 
