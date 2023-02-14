@@ -2,40 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SumoTankAIGun : MonoBehaviour
+namespace Sumo
 {
-    public int maxMisslePower;
-    public Transform shootPosition;
-    public GameObject missileObject;
-    public SumoController sumoController;
-    public List<Transform> path;
-
-    private bool _isShoot;
-
-    private void Update()
+    public class SumoTankAIGun : MonoBehaviour
     {
-        RaycastHit hit;
-        if(Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, 100, -1, QueryTriggerInteraction.Ignore))
+        public int maxMisslePower;
+        public Transform shootPosition;
+        public GameObject missileObject;
+        public SumoController sumoController;
+        public List<Transform> path;
+
+        private bool _isShoot;
+
+        private void Update()
         {
-            if (sumoController.isGameStart && path.Contains(hit.transform) && !_isShoot)
+            RaycastHit hit;
+            if(Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, 100, -1, QueryTriggerInteraction.Ignore))
             {
-                _isShoot = true;
-                Shoot();
-                StartCoroutine(IsShoot());
-            }
-        }   
-    }
+                if (sumoController.isGameStart && path.Contains(hit.transform) && !_isShoot)
+                {
+                    _isShoot = true;
+                    Shoot();
+                    StartCoroutine(IsShoot());
+                }
+            }   
+        }
 
-    private void Shoot()
-    {
-        var missile = Instantiate(missileObject, shootPosition.position, Quaternion.identity);
-        missile.GetComponent<Rigidbody>().AddForce(shootPosition.forward * maxMisslePower, ForceMode.Impulse);
-        transform.GetComponentInParent<Rigidbody>().AddForce(shootPosition.forward * -maxMisslePower * 100, ForceMode.Impulse);
-    }
+        private void Shoot()
+        {
+            var missile = Instantiate(missileObject, shootPosition.position, Quaternion.identity);
+            missile.GetComponent<Rigidbody>().AddForce(shootPosition.forward * maxMisslePower, ForceMode.Impulse);
+            transform.GetComponentInParent<Rigidbody>().AddForce(shootPosition.forward * -maxMisslePower * 100, ForceMode.Impulse);
+        }
 
-    private IEnumerator IsShoot()
-    {
-        yield return new WaitForSeconds(2);
-        _isShoot = false;
+        private IEnumerator IsShoot()
+        {
+            yield return new WaitForSeconds(2);
+            _isShoot = false;
+        }
     }
 }

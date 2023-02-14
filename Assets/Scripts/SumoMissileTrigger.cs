@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sumo;
 using UnityEngine;
 
 public class SumoMissileTrigger : MonoBehaviour

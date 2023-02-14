@@ -2,254 +2,257 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankBattleAI : MonoBehaviour
+namespace TankBattle
 {
-    public int maxHealth;
-    public int currentHealth;
-    public float maxMotorTorque;
-    public float maxSteerAngle;
-    public float avoidSpeed;
-    public int currentNode;
-    public int passedNode;
-    public float wayDistance;
-    public bool isGround = true;
-    public bool isSleep;
-    public GameObject path;
-    public BattleController battleController;
-    public Rigidbody rb;
-    public Sensor frontSensor;
-    public Sensor rightFrontSensor;
-    public Sensor leftFrontSensor;
-    public Sensor rightAngleSensor;
-    public Sensor leftAngleSensor;
-    public Sensor rightSideSensor;
-    public Sensor leftSideSensor;
-    public List<Transform> nodes;
-    public WheelCollider[] FrontWheelsCol;
-    public WheelCollider[] RearWheelsCol;
-    public Transform[] FrontWheelTrans;
-    public Transform[] RearWheelTrans;
-
-    private float _targetSteerAngle;
-    private bool _isAvoiding;
-    private bool _isTargetFind;
-
-    private void Start()
+    public class TankBattleAI : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-        nodes = path.GetComponent<PathAI>().nodes;
-        currentHealth = maxHealth;
-    }
+        public int maxHealth;
+        public int currentHealth;
+        public float maxMotorTorque;
+        public float maxSteerAngle;
+        public float avoidSpeed;
+        public int currentNode;
+        public int passedNode;
+        public float wayDistance;
+        public bool isGround = true;
+        public bool isSleep;
+        public GameObject path;
+        public BattleController battleController;
+        public Rigidbody rb;
+        public Sensor frontSensor;
+        public Sensor rightFrontSensor;
+        public Sensor leftFrontSensor;
+        public Sensor rightAngleSensor;
+        public Sensor leftAngleSensor;
+        public Sensor rightSideSensor;
+        public Sensor leftSideSensor;
+        public List<Transform> nodes;
+        public WheelCollider[] FrontWheelsCol;
+        public WheelCollider[] RearWheelsCol;
+        public Transform[] FrontWheelTrans;
+        public Transform[] RearWheelTrans;
 
-    private void FixedUpdate()
-    {
-        if (isGround && battleController.isGameStart && !isSleep)
-        {
-            TargetSensors();
-            if(!_isTargetFind)
-                AvoidingSensors();
-            ApplySteer();
-            Drive();
-            CheckWaypointDistance();
-            LerpToSteerAngle();
-        }
-    }
+        private float _targetSteerAngle;
+        private bool _isAvoiding;
+        private bool _isTargetFind;
 
-    private void TargetSensors()
-    {
-        float avoidMultiplier = 0;
-        _isAvoiding = false;
-        _isTargetFind = false;
-
-        if (rightFrontSensor.CheckTarget())
+        private void Start()
         {
-            _isAvoiding = true;
-            _isTargetFind = true;
-            avoidMultiplier += 1f;
-        }
-        else if (rightAngleSensor.CheckTarget())
-        {
-            _isAvoiding = true;
-            _isTargetFind = true;
-            avoidMultiplier += 0.5f;
-        }
-
-        if (rightSideSensor.CheckTarget())
-        {
-            _isAvoiding = true;
-            _isTargetFind = true;
-            avoidMultiplier += 0.5f;
+            rb = GetComponent<Rigidbody>();
+            nodes = path.GetComponent<PathAI>().nodes;
+            currentHealth = maxHealth;
         }
 
-        if (leftFrontSensor.CheckTarget())
+        private void FixedUpdate()
         {
-            _isAvoiding = true;
-            _isTargetFind = true;
-            avoidMultiplier -= 1f;
-        }
-        else if (leftAngleSensor.CheckTarget())
-        {
-            _isAvoiding = true;
-            _isTargetFind = true;
-            avoidMultiplier -= 0.5f;
-        }
-
-        if (leftSideSensor.CheckTarget())
-        {
-            _isAvoiding = true;
-            _isTargetFind = true;
-            avoidMultiplier += 0.5f;
-        }
-
-        if (frontSensor.CheckTarget())
-        {
-            _isAvoiding = true;
-            _isTargetFind = true;
-            if (frontSensor.hit.normal.x < 0)
+            if (isGround && battleController.isGameStart && !isSleep)
             {
-                avoidMultiplier = 1;
-            }
-            else
-            {
-                avoidMultiplier = -1;
+                TargetSensors();
+                if(!_isTargetFind)
+                    AvoidingSensors();
+                ApplySteer();
+                Drive();
+                CheckWaypointDistance();
+                LerpToSteerAngle();
             }
         }
 
-        if (_isTargetFind)
+        private void TargetSensors()
         {
-            _targetSteerAngle = avoidSpeed * avoidMultiplier;
-        }
-    }
+            float avoidMultiplier = 0;
+            _isAvoiding = false;
+            _isTargetFind = false;
 
-    private void AvoidingSensors()
-    {
-        float avoidMultiplier = 0;
-        _isAvoiding = false;
-
-        if (rightFrontSensor.CheckObstacle())
-        {
-            _isAvoiding = true;
-            avoidMultiplier -= 1f;
-        }
-        else if (rightAngleSensor.CheckObstacle())
-        {
-            _isAvoiding = true;
-            avoidMultiplier -= 0.5f;
-        }
-
-        if (rightSideSensor.CheckObstacle())
-        {
-            _isAvoiding = true;
-            avoidMultiplier -= 0.5f;
-        }
-
-        if (leftFrontSensor.CheckObstacle())
-        {
-            _isAvoiding = true;
-            avoidMultiplier += 1f;
-        }
-        else if (leftAngleSensor.CheckObstacle())
-        {
-            _isAvoiding = true;
-            avoidMultiplier += 0.5f;
-        }
-
-        if (leftSideSensor.CheckObstacle())
-        {
-            _isAvoiding = true;
-            avoidMultiplier += 0.5f;
-        }
-
-        if (frontSensor.CheckObstacle())
-        {
-            _isAvoiding = true;
-            if (frontSensor.hit.normal.x < 0)
+            if (rightFrontSensor.CheckTarget())
             {
-                avoidMultiplier = -1;
+                _isAvoiding = true;
+                _isTargetFind = true;
+                avoidMultiplier += 1f;
             }
-            else
+            else if (rightAngleSensor.CheckTarget())
             {
-                avoidMultiplier = 1;
+                _isAvoiding = true;
+                _isTargetFind = true;
+                avoidMultiplier += 0.5f;
+            }
+
+            if (rightSideSensor.CheckTarget())
+            {
+                _isAvoiding = true;
+                _isTargetFind = true;
+                avoidMultiplier += 0.5f;
+            }
+
+            if (leftFrontSensor.CheckTarget())
+            {
+                _isAvoiding = true;
+                _isTargetFind = true;
+                avoidMultiplier -= 1f;
+            }
+            else if (leftAngleSensor.CheckTarget())
+            {
+                _isAvoiding = true;
+                _isTargetFind = true;
+                avoidMultiplier -= 0.5f;
+            }
+
+            if (leftSideSensor.CheckTarget())
+            {
+                _isAvoiding = true;
+                _isTargetFind = true;
+                avoidMultiplier += 0.5f;
+            }
+
+            if (frontSensor.CheckTarget())
+            {
+                _isAvoiding = true;
+                _isTargetFind = true;
+                if (frontSensor.hit.normal.x < 0)
+                {
+                    avoidMultiplier = 1;
+                }
+                else
+                {
+                    avoidMultiplier = -1;
+                }
+            }
+
+            if (_isTargetFind)
+            {
+                _targetSteerAngle = avoidSpeed * avoidMultiplier;
             }
         }
 
-        if (_isAvoiding)
+        private void AvoidingSensors()
         {
-            _targetSteerAngle = avoidSpeed * avoidMultiplier;
-        }
-    }
+            float avoidMultiplier = 0;
+            _isAvoiding = false;
 
-    private void LerpToSteerAngle()
-    {
-        if (_targetSteerAngle < 3 && _targetSteerAngle > -3)
+            if (rightFrontSensor.CheckObstacle())
+            {
+                _isAvoiding = true;
+                avoidMultiplier -= 1f;
+            }
+            else if (rightAngleSensor.CheckObstacle())
+            {
+                _isAvoiding = true;
+                avoidMultiplier -= 0.5f;
+            }
+
+            if (rightSideSensor.CheckObstacle())
+            {
+                _isAvoiding = true;
+                avoidMultiplier -= 0.5f;
+            }
+
+            if (leftFrontSensor.CheckObstacle())
+            {
+                _isAvoiding = true;
+                avoidMultiplier += 1f;
+            }
+            else if (leftAngleSensor.CheckObstacle())
+            {
+                _isAvoiding = true;
+                avoidMultiplier += 0.5f;
+            }
+
+            if (leftSideSensor.CheckObstacle())
+            {
+                _isAvoiding = true;
+                avoidMultiplier += 0.5f;
+            }
+
+            if (frontSensor.CheckObstacle())
+            {
+                _isAvoiding = true;
+                if (frontSensor.hit.normal.x < 0)
+                {
+                    avoidMultiplier = -1;
+                }
+                else
+                {
+                    avoidMultiplier = 1;
+                }
+            }
+
+            if (_isAvoiding)
+            {
+                _targetSteerAngle = avoidSpeed * avoidMultiplier;
+            }
+        }
+
+        private void LerpToSteerAngle()
         {
-            transform.Rotate(new Vector3(0, 1, 0), Time.deltaTime * _targetSteerAngle);
-            FrontWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
-            RearWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
-            FrontWheelTrans[1].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
-            RearWheelTrans[1].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
+            if (_targetSteerAngle < 3 && _targetSteerAngle > -3)
+            {
+                transform.Rotate(new Vector3(0, 1, 0), Time.deltaTime * _targetSteerAngle);
+                FrontWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
+                RearWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
+                FrontWheelTrans[1].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
+                RearWheelTrans[1].Rotate(new Vector3(1, 0, 0), Time.deltaTime * maxMotorTorque, Space.Self);
+            }
+            else if (_targetSteerAngle > 0)
+            {
+                transform.Rotate(new Vector3(0, 1, 0), Time.deltaTime * _targetSteerAngle);
+                FrontWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+                RearWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+                FrontWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+                RearWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+            }
+            else if (_targetSteerAngle < 0)
+            {
+                transform.Rotate(new Vector3(0, 1, 0), Time.deltaTime * _targetSteerAngle);
+                FrontWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+                RearWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+                FrontWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+                RearWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+            }
+
         }
-        else if (_targetSteerAngle > 0)
+
+        public void CheckWaypointDistance()
         {
-            transform.Rotate(new Vector3(0, 1, 0), Time.deltaTime * _targetSteerAngle);
-            FrontWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
-            RearWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
-            FrontWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
-            RearWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+            wayDistance = Vector3.Distance(transform.position, nodes[currentNode].position);
+            if (Vector3.Distance(transform.position, nodes[currentNode].position) < 20f)
+            {
+                if (currentNode == nodes.Count - 1 || currentNode >= nodes.Count - 1)
+                    currentNode = 0;
+                else
+                    currentNode++;
+            }
         }
-        else if (_targetSteerAngle < 0)
+
+        private void Drive()
         {
-            transform.Rotate(new Vector3(0, 1, 0), Time.deltaTime * _targetSteerAngle);
-            FrontWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
-            RearWheelTrans[0].Rotate(new Vector3(1, 0, 0), Time.deltaTime * _targetSteerAngle * 10, Space.Self);
-            FrontWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
-            RearWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
+            transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * 5);
         }
 
-    }
-
-    public void CheckWaypointDistance()
-    {
-        wayDistance = Vector3.Distance(transform.position, nodes[currentNode].position);
-        if (Vector3.Distance(transform.position, nodes[currentNode].position) < 20f)
+        private void ApplySteer()
         {
-            if (currentNode == nodes.Count - 1 || currentNode >= nodes.Count - 1)
-                currentNode = 0;
-            else
-                currentNode++;
+            if (_isAvoiding || _isTargetFind) return;
+            Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
+            float newSteer = relativeVector.x / relativeVector.magnitude * maxSteerAngle;
+            _targetSteerAngle = newSteer;
         }
-    }
 
-    private void Drive()
-    {
-        transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * 5);
-    }
-
-    private void ApplySteer()
-    {
-        if (_isAvoiding || _isTargetFind) return;
-        Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
-        float newSteer = relativeVector.x / relativeVector.magnitude * maxSteerAngle;
-        _targetSteerAngle = newSteer;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-
-        if (currentHealth <= 0)
+        public void TakeDamage(int damage)
         {
-            currentHealth = 0;
-            battleController.CheckScore(2, true);
-            StartCoroutine(TankSleep());
-        }
-    }
+            currentHealth -= damage;
 
-    private IEnumerator TankSleep()
-    {
-        isSleep = true;
-        yield return new WaitForSeconds(2);
-        currentHealth = maxHealth;
-        isSleep = false;
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                battleController.CheckScore(2, true);
+                StartCoroutine(TankSleep());
+            }
+        }
+
+        private IEnumerator TankSleep()
+        {
+            isSleep = true;
+            yield return new WaitForSeconds(2);
+            currentHealth = maxHealth;
+            isSleep = false;
+        }
     }
 }

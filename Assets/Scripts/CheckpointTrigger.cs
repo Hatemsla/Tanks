@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Race;
 using UnityEngine;
 
 public class CheckpointTrigger : MonoBehaviour

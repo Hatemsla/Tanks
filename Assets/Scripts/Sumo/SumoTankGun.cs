@@ -1,37 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SumoTankGun : MonoBehaviour
+namespace Sumo
 {
-    public int maxMisslePower;
-    public GameObject missileObject;
-    public Transform shootPosition;
-    public SumoController sumoController;
-
-    private bool _isShoot;
-
-    private void Update()
+    public class SumoTankGun : MonoBehaviour
     {
-        if (sumoController.isGameStart && Input.GetKeyDown(KeyCode.Q))
-            Shoot();
-    }
+        public int maxMisslePower;
+        public GameObject missileObject;
+        public Transform shootPosition;
+        public SumoController sumoController;
 
-    private void Shoot()
-    {
-        if (!_isShoot)
+        private bool _isShoot;
+
+        private void Update()
         {
-            _isShoot = true;
-            var missile = Instantiate(missileObject, shootPosition.position, Quaternion.identity);
-            missile.GetComponent<Rigidbody>().AddForce(shootPosition.forward * maxMisslePower, ForceMode.Impulse);
-            transform.GetComponentInParent<Rigidbody>().AddForce(shootPosition.forward * -maxMisslePower * 100, ForceMode.Impulse);
-            StartCoroutine(IsShoot());
+            if (sumoController.isGameStart && Input.GetKeyDown(KeyCode.Q))
+                Shoot();
         }
-    }
 
-    private IEnumerator IsShoot()
-    {
-        yield return new WaitForSeconds(2);
-        _isShoot = false;
+        private void Shoot()
+        {
+            if (!_isShoot)
+            {
+                _isShoot = true;
+                var missile = Instantiate(missileObject, shootPosition.position, Quaternion.identity);
+                missile.GetComponent<Rigidbody>().AddForce(shootPosition.forward * maxMisslePower, ForceMode.Impulse);
+                transform.GetComponentInParent<Rigidbody>().AddForce(shootPosition.forward * -maxMisslePower * 100, ForceMode.Impulse);
+                StartCoroutine(IsShoot());
+            }
+        }
+
+        private IEnumerator IsShoot()
+        {
+            yield return new WaitForSeconds(2);
+            _isShoot = false;
+        }
     }
 }

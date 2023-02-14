@@ -1,45 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnZoneTrigger : MonoBehaviour
+namespace TankBattle
 {
-    public TargetTrigger targetTrigger;
-
-    private int _objectsInZone = 0;
-
-    private void Start()
+    public class SpawnZoneTrigger : MonoBehaviour
     {
-        targetTrigger = GetComponentInChildren<TargetTrigger>();
-    }
+        public TargetTrigger targetTrigger;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot"))
+        private int _objectsInZone = 0;
+
+        private void Start()
         {
-            _objectsInZone++;
-            CheckZone();
+            targetTrigger = GetComponentInChildren<TargetTrigger>();
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot"))
+        private void OnTriggerEnter(Collider other)
         {
-            _objectsInZone--;
-            CheckZone();
+            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot"))
+            {
+                _objectsInZone++;
+                CheckZone();
+            }
         }
-    }
 
-    private void CheckZone()
-    {
-        if (_objectsInZone == 0)
+        private void OnTriggerExit(Collider other)
         {
-            targetTrigger.isSomeoneInZone = false;
+            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bot"))
+            {
+                _objectsInZone--;
+                CheckZone();
+            }
         }
-        else
+
+        private void CheckZone()
         {
-            targetTrigger.isSomeoneInZone = true;
+            if (_objectsInZone == 0)
+            {
+                targetTrigger.isSomeoneInZone = false;
+            }
+            else
+            {
+                targetTrigger.isSomeoneInZone = true;
+            }
         }
     }
 }

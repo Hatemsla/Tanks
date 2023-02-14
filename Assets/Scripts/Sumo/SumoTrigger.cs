@@ -1,35 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SumoTrigger : MonoBehaviour
+namespace Sumo
 {
-    public SumoController sumoController;
-
-    private void Start()
+    public class SumoTrigger : MonoBehaviour
     {
-        sumoController.GetComponent<SumoController>();
-    }
+        public SumoController sumoController;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Bot")
+        private void Start()
         {
-            var bot = other.gameObject.GetComponentInParent<SumoTankAI>();
-            bot.isGround = false;
-            bot.rb.drag = 0;
-            sumoController.isWin = true;
-            sumoController.CheckMatchResult();
-            sumoController.isRoundOver = true;
+            sumoController.GetComponent<SumoController>();
         }
 
-        if (other.gameObject.tag == "Player")
+        private void OnTriggerEnter(Collider other)
         {
-            var player = other.gameObject.GetComponentInParent<SumoTankController>();
-            player.isGround = false;
-            player.rb.drag = 0;
-            sumoController.CheckMatchResult();
-            sumoController.isRoundOver = true;
+            if (other.gameObject.tag == "Bot")
+            {
+                var bot = other.gameObject.GetComponentInParent<SumoTankAI>();
+                bot.isGround = false;
+                bot.rb.drag = 0;
+                sumoController.isWin = true;
+                sumoController.CheckMatchResult();
+                sumoController.isRoundOver = true;
+            }
+
+            if (other.gameObject.tag == "Player")
+            {
+                var player = other.gameObject.GetComponentInParent<SumoTankController>();
+                player.isGround = false;
+                player.rb.drag = 0;
+                sumoController.CheckMatchResult();
+                sumoController.isRoundOver = true;
+            }
         }
     }
 }

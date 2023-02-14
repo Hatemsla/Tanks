@@ -1,63 +1,65 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckNode : MonoBehaviour
+namespace Race
 {
-    public int currentNode = 0;
-    public int passedNode = 0;
-    public int currentLap = 1;
-    public float wayDistance;
-    public RaceController raceController;
-    public RoundTrigger roundTrigger;
-    public List<Transform> nodes;
-
-    private bool _isFirstRound = true;
-
-    private void Update()
+    public class CheckNode : MonoBehaviour
     {
-        wayDistance = Vector3.Distance(transform.position, nodes[currentNode].position);
-    }
+        public int currentNode = 0;
+        public int passedNode = 0;
+        public int currentLap = 1;
+        public float wayDistance;
+        public RaceController raceController;
+        public RoundTrigger roundTrigger;
+        public List<Transform> nodes;
 
-    public void CheckWaypoint()
-    {
-        if (currentNode == nodes.Count - 1)
+        private bool _isFirstRound = true;
+
+        private void Update()
         {
-            currentNode = 0;
+            wayDistance = Vector3.Distance(transform.position, nodes[currentNode].position);
         }
-        else
-        {
-            currentNode++;
-        }
-        passedNode++;
-    }
 
-    public void LapCount()
-    {
-        if (!_isFirstRound)
+        public void CheckWaypoint()
         {
-            currentLap++;
-        }
-        _isFirstRound = false;
-    }
-
-    public void SpawnWall()
-    {
-        if (roundTrigger.walls.Count > 0)
-        {
-            for (int i = 0; i < roundTrigger.wallSpawnsList.Count; i++)
+            if (currentNode == nodes.Count - 1)
             {
-                roundTrigger.wallSpawnsList[i].SetRandomPosition();
+                currentNode = 0;
             }
+            else
+            {
+                currentNode++;
+            }
+            passedNode++;
         }
 
-        if (roundTrigger.isFirstLap)
+        public void LapCount()
         {
-            for (int i = 0; i < roundTrigger.wallSpawnsList.Count; i++)
+            if (!_isFirstRound)
             {
-                roundTrigger.wallSpawnsList[i].SpawnWall();
+                currentLap++;
             }
-            roundTrigger.isFirstLap = false;
+            _isFirstRound = false;
+        }
+
+        public void SpawnWall()
+        {
+            if (roundTrigger.walls.Count > 0)
+            {
+                for (int i = 0; i < roundTrigger.wallSpawnsList.Count; i++)
+                {
+                    roundTrigger.wallSpawnsList[i].SetRandomPosition();
+                }
+            }
+
+            if (roundTrigger.isFirstLap)
+            {
+                for (int i = 0; i < roundTrigger.wallSpawnsList.Count; i++)
+                {
+                    roundTrigger.wallSpawnsList[i].SpawnWall();
+                }
+                roundTrigger.isFirstLap = false;
+            }
         }
     }
 }

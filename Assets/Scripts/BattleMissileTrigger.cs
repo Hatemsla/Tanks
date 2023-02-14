@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TankBattle;
 using UnityEngine;
 
 public class BattleMissileTrigger : MonoBehaviour
@@ -8,7 +9,7 @@ public class BattleMissileTrigger : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Bot")
+        if (other.gameObject.CompareTag("Bot"))
         {
             var bot = other.gameObject.GetComponentInParent<TankBattleAI>();
             if (!bot.isSleep)
@@ -18,7 +19,7 @@ public class BattleMissileTrigger : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             var player = other.gameObject.GetComponentInParent<TankBattleController>();
             if (!player.isSleep)
@@ -28,7 +29,7 @@ public class BattleMissileTrigger : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag != "Checkpoint")
+        if (!other.gameObject.CompareTag("Checkpoint"))
             Destroy(gameObject);
 
     }
