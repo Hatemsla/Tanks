@@ -13,7 +13,7 @@ namespace Sumo
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Bot")
+            if (other.gameObject.CompareTag("Bot"))
             {
                 var bot = other.gameObject.GetComponentInParent<SumoTankAI>();
                 bot.isGround = false;
@@ -23,7 +23,7 @@ namespace Sumo
                 sumoController.isRoundOver = true;
             }
 
-            if (other.gameObject.tag == "Player")
+            if (other.gameObject.CompareTag("Player"))
             {
                 var player = other.gameObject.GetComponentInParent<SumoTankController>();
                 player.isGround = false;

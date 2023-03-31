@@ -8,14 +8,10 @@ namespace Sumo
         public float maxMotorTorque = 100;
         public float maxSteerAngle = 45f;
         public int currentNode;
-        public int passedNode;
-        public float wayDistance;
         public bool isGround = true;
         public Rigidbody rb;
         public SumoController sumoController;
         public List<Transform> nodes;
-        public WheelCollider[] FrontWheelsCol;
-        public WheelCollider[] RearWheelsCol;
         public Transform[] FrontWheelTrans;
         public Transform[] RearWheelTrans;
 
@@ -31,8 +27,8 @@ namespace Sumo
         {
             if (isGround && sumoController.isGameStart && !sumoController.isRoundOver)
             {
-                ApplySteer();
                 Drive();
+                ApplySteer();
                 CheckWaypointDistance();
                 LerpToSteerAngle();
             }
@@ -64,12 +60,10 @@ namespace Sumo
                 FrontWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
                 RearWheelTrans[1].Rotate(new Vector3(1, 0, 0), -Time.deltaTime * _targetSteerAngle * 10, Space.Self);
             }
-
         }
 
         private void CheckWaypointDistance()
         {
-            wayDistance = Vector3.Distance(transform.position, nodes[currentNode].position);
             if (Vector3.Distance(transform.position, nodes[currentNode].position) < 20f)
             {
                 if (currentNode == nodes.Count - 1)
@@ -86,8 +80,8 @@ namespace Sumo
 
         private void ApplySteer()
         {
-            Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
-            float newSteer = relativeVector.x / relativeVector.magnitude * maxSteerAngle;
+            var relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
+            var newSteer = relativeVector.x / relativeVector.magnitude * maxSteerAngle;
             _targetSteerAngle = newSteer;
         }
 

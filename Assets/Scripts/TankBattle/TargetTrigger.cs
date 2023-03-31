@@ -20,14 +20,14 @@ namespace TankBattle
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.tag == "Bot" || other.gameObject.tag == "BotMissile")
+            if (other.gameObject.CompareTag("Bot") || other.gameObject.CompareTag("BotMissile"))
             {
                 battleController.CheckScore(_score, false);
                 index = battleController.path.nodes.IndexOf(transform);
                 battleController.path.nodes.Remove(transform);
                 StartCoroutine(HideTarget());
             }
-            else if (other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerMissile")
+            else if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("PlayerMissile"))
             {
                 battleController.CheckScore(_score, true);
                 index = battleController.path.nodes.IndexOf(transform);
